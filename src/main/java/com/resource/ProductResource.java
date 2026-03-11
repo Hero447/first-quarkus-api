@@ -6,6 +6,8 @@ import com.google.protobuf.Empty;
 import com.google.protobuf.Int64Value;
 import com.mapper.ProductMapper;
 import com.proto.service.*;
+import io.quarkus.cache.CacheInvalidateAll;
+import io.quarkus.cache.CacheResult;
 import io.quarkus.grpc.GrpcClient;
 import io.smallrye.mutiny.Uni;
 import jakarta.inject.Inject;
@@ -39,6 +41,8 @@ public class ProductResource {
             content = @Content(schema = @Schema(implementation = Product.class))
     )
     @APIResponse(responseCode = "400", description = "Invalid Product")
+    @CacheInvalidateAll(cacheName = "cashedProduct")
+    @CacheInvalidateAll(cacheName = "cashedProductList")
     public Uni<Response> create(ProductRequest productRequest) {
         return productService.create(mapper.productRequestToProduct(productRequest))
                 .onItem().transform(inserted -> Response.created(URI.create("/api/v1/products/" + inserted.getId())).build());
@@ -48,6 +52,8 @@ public class ProductResource {
     @APIResponse(responseCode = "204", description = "Product updated")
     @APIResponse(responseCode = "400", description = "Invalid Product")
     @APIResponse(responseCode = "404", description = "Product does not exist for given id")
+    @CacheInvalidateAll(cacheName = "cashedProduct")
+    @CacheInvalidateAll(cacheName = "cashedProductList")
     public Uni<ProductResponse> update(ProductRequest productRequest) {
         return productService.update(mapper.productRequestToProduct(productRequest))
                 .map(mapper::productToProductResponse);
@@ -59,11 +65,13 @@ public class ProductResource {
             content = @Content(schema = @Schema(implementation = Product.class))
     )
     @APIResponse(responseCode = "404", description = "Product does not exist for given id")
+    @CacheResult(cacheName = "cashedProduct")
     public Uni<ProductResponse> findById(@Parameter(name = "id", required = true) @PathParam("id") Long id){
         return productService.findById(Int64Value.of(id)).map(mapper::productToProductResponse);
     }
 
     @GET
+    @CacheResult(cacheName = "cashedProductList")
     public Uni<List<ProductResponse>> list() {
         return productService.list(Empty.newBuilder().build())
                 .onItem().transform(ProductList::getResultListList)
@@ -74,6 +82,8 @@ public class ProductResource {
     @Path("/{id}")
     @APIResponse(responseCode = "200", description = "Product deleted")
     @APIResponse(responseCode = "204", description = "Product does not exist for given id")
+    @CacheInvalidateAll(cacheName = "cashedProduct")
+    @CacheInvalidateAll(cacheName = "cashedProductList")
     public Uni<Response> delete(@Parameter(name = "id", required = true) @PathParam("id") Long id){
         return productService.delete(Int64Value.of(id)).onItem()
                 .transform(boolValue ->

@@ -8,6 +8,7 @@ import com.mapper.CustomerMapper;
 import com.proto.service.Customer;
 import com.proto.service.CustomerList;
 import com.proto.service.CustomerService;
+import io.quarkus.cache.CacheInvalidateAll;
 import io.quarkus.cache.CacheResult;
 import io.quarkus.grpc.GrpcClient;
 import io.smallrye.mutiny.Uni;
@@ -41,6 +42,8 @@ public class CustomerResource {
             content = @Content(schema = @Schema(implementation = Customer.class))
     )
     @APIResponse(responseCode = "400", description = "Invalid Customer")
+    @CacheInvalidateAll(cacheName = "cashedCustomer")
+    @CacheInvalidateAll(cacheName = "cashedCustomerList")
     public Uni<Response> create(CustomerRequest customerRequest) {
         return customerService.create(mapper.customerRequestToCustomer(customerRequest))
                 .onItem().transform(inserted -> Response.created(URI.create("/api/v1/customers/" + inserted.getId())).build());
@@ -50,6 +53,8 @@ public class CustomerResource {
     @APIResponse(responseCode = "204", description = "Customer updated")
     @APIResponse(responseCode = "400", description = "Invalid Customer")
     @APIResponse(responseCode = "404", description = "Customer does not exist for given id")
+    @CacheInvalidateAll(cacheName = "cashedCustomer")
+    @CacheInvalidateAll(cacheName = "cashedCustomerList")
     public Uni<CustomerResponse> update(CustomerRequest customerRequest) {
         return customerService.update(mapper.customerRequestToCustomer(customerRequest))
                 .map(mapper::customerToCustomerResponse);
@@ -78,6 +83,8 @@ public class CustomerResource {
     @Path("/{id}")
     @APIResponse(responseCode = "200", description = "Customer deleted")
     @APIResponse(responseCode = "204", description = "Customer does not exist for given id")
+    @CacheInvalidateAll(cacheName = "cashedCustomer")
+    @CacheInvalidateAll(cacheName = "cashedCustomerList")
     public Uni<Response> delete(@Parameter(name = "id", required = true) @PathParam("id") Long id){
         return customerService.delete(Int64Value.of(id)).onItem()
                 .transform(boolValue ->
