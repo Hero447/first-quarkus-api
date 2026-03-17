@@ -1,0 +1,242 @@
+---
+openapi: 3.1.0
+info:
+  title: first-quarkus-api API
+  version: 1.0.0-SNAPSHOT
+tags:
+  - name: customer
+    description: Customer Operations
+  - name: product
+    description: Product Operations
+components:
+  schemas:
+    CustomerRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        email:
+          type: string
+    CustomerResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        email:
+          type: string
+    ProductRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        price:
+          type: integer
+          format: int64
+    ProductResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        price:
+          type: integer
+          format: int64
+paths:
+  /api/v1/customers:
+    post:
+      tags:
+        - customer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerRequest"
+        required: true
+      responses:
+        "201":
+          description: Customer Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerResponse"
+        "400":
+          description: Invalid Customer
+      summary: Create
+    put:
+      tags:
+        - customer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerRequest"
+        required: true
+      responses:
+        "204":
+          description: Customer updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerResponse"
+        "400":
+          description: Invalid Customer
+        "404":
+          description: Customer does not exist for given id
+      summary: Update
+    get:
+      tags:
+        - customer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CustomerResponse"
+      summary: List
+  /api/v1/customers/{id}:
+    get:
+      tags:
+        - customer
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Get Customer by id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerResponse"
+        "404":
+          description: Customer does not exist for given id
+      summary: Find By Id
+    delete:
+      tags:
+        - customer
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Customer deleted
+          content:
+            application/json: {}
+        "204":
+          description: Customer does not exist for given id
+      summary: Delete
+  /api/v1/products:
+    put:
+      tags:
+        - product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductRequest"
+        required: true
+      responses:
+        "204":
+          description: Product updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        "400":
+          description: Invalid Product
+        "404":
+          description: Product does not exist for given id
+      summary: Update
+    get:
+      tags:
+        - product
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ProductResponse"
+      summary: List
+    post:
+      tags:
+        - product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductRequest"
+        required: true
+      responses:
+        "201":
+          description: Product Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        "400":
+          description: Invalid Product
+      summary: Create
+  /api/v1/products/{id}:
+    get:
+      tags:
+        - product
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Get Product by id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        "404":
+          description: Product does not exist for given id
+      summary: Find By Id
+    delete:
+      tags:
+        - product
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Product deleted
+          content:
+            application/json: {}
+        "204":
+          description: Product does not exist for given id
+      summary: Delete
+
