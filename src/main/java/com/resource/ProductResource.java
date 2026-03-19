@@ -22,8 +22,8 @@ public class ProductResource implements ProductApi {
 
     @Override
     @CacheResult(cacheName = "cashedProductList")
-    public Uni<List<ProductResponse>> getAllProducts() {
-        return productService.list();
+    public Uni<List<ProductResponse>> getAllProducts(Integer minPrice, Integer maxPrice) {
+        return productService.list(minPrice, maxPrice);
     }
 
     @Override

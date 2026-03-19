@@ -178,6 +178,19 @@ paths:
       tags:
         - product
       operationId: getAllProducts
+      parameters:
+        - name: minPrice
+          in: query
+          description: Minimal price of returned product
+          required: false
+          schema:
+            type: integer
+        - name: maxPrice
+          in: query
+          description: Maximal price of returned product
+          required: false
+          schema:
+            type: integer
       responses:
         "200":
           description: OK

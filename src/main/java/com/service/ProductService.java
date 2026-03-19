@@ -1,8 +1,8 @@
 package com.service;
 
-import com.google.protobuf.Empty;
 import com.google.protobuf.Int64Value;
 import com.mapper.ProductMapper;
+import com.proto.service.ProductFilter;
 import com.proto.service.ProductList;
 import io.quarkus.grpc.GrpcClient;
 import io.smallrye.mutiny.Uni;
@@ -22,8 +22,17 @@ public class ProductService {
     @Inject
     ProductMapper mapper;
 
-    public Uni<List<ProductResponse>> list() {
-        return productService.list(Empty.newBuilder().build())
+    public Uni<List<ProductResponse>> list(Integer minPrice, Integer maxPrice) {
+        ProductFilter.Builder filterBuilder = ProductFilter.newBuilder();
+        if (minPrice != null) {
+            filterBuilder.setMinPrice(minPrice);
+        }
+
+        if (maxPrice != null) {
+            filterBuilder.setMaxPrice(maxPrice);
+        }
+
+        return productService.list(filterBuilder.build())
                 .onItem().transform(ProductList::getResultListList)
                 .map(mapper::productListToProductResponseList);
     }
