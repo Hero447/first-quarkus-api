@@ -57,6 +57,7 @@ paths:
     post:
       tags:
         - customer
+      operationId: createCustomer
       requestBody:
         content:
           application/json:
@@ -76,6 +77,7 @@ paths:
     put:
       tags:
         - customer
+      operationId: updateCustomer
       requestBody:
         content:
           application/json:
@@ -97,6 +99,7 @@ paths:
     get:
       tags:
         - customer
+      operationId: getAllCustomers
       responses:
         "200":
           description: OK
@@ -111,6 +114,7 @@ paths:
     get:
       tags:
         - customer
+      operationId: getCustomerById
       parameters:
         - name: id
           required: true
@@ -131,6 +135,7 @@ paths:
     delete:
       tags:
         - customer
+      operationId: deleteCustomerById
       parameters:
         - name: id
           required: true
@@ -150,6 +155,7 @@ paths:
     put:
       tags:
         - product
+      operationId: updateProduct
       requestBody:
         content:
           application/json:
@@ -171,6 +177,7 @@ paths:
     get:
       tags:
         - product
+      operationId: getAllProducts
       responses:
         "200":
           description: OK
@@ -184,6 +191,7 @@ paths:
     post:
       tags:
         - product
+      operationId: createProduct
       requestBody:
         content:
           application/json:
@@ -204,6 +212,7 @@ paths:
     get:
       tags:
         - product
+      operationId: getProductById
       parameters:
         - name: id
           required: true
@@ -224,6 +233,7 @@ paths:
     delete:
       tags:
         - product
+      operationId: deleteProductById
       parameters:
         - name: id
           required: true

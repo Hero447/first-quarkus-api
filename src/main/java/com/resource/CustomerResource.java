@@ -20,34 +20,34 @@ public class CustomerResource implements CustomerApi {
 
     @Override
     @CacheResult(cacheName = "cashedCustomerList")
-    public Uni<List<CustomerResponse>> apiV1CustomersGet() {
+    public Uni<List<CustomerResponse>> getAllCustomers() {
         return customerService.list();
     }
 
     @Override
     @CacheInvalidateAll(cacheName = "cashedCustomer")
     @CacheInvalidateAll(cacheName = "cashedCustomerList")
-    public Uni<Response> apiV1CustomersIdDelete(Long id) {
+    public Uni<Response> deleteCustomerById(Long id) {
         return customerService.delete(id);
     }
 
     @Override
     @CacheResult(cacheName = "cashedCustomer")
-    public Uni<CustomerResponse> apiV1CustomersIdGet(Long id) {
+    public Uni<CustomerResponse> getCustomerById(Long id) {
         return customerService.findById(id);
     }
 
     @Override
     @CacheInvalidateAll(cacheName = "cashedCustomer")
     @CacheInvalidateAll(cacheName = "cashedCustomerList")
-    public Uni<CustomerResponse> apiV1CustomersPost(CustomerRequest customerRequest) {
+    public Uni<CustomerResponse> createCustomer(CustomerRequest customerRequest) {
         return customerService.create(customerRequest);
     }
 
     @Override
     @CacheInvalidateAll(cacheName = "cashedCustomer")
     @CacheInvalidateAll(cacheName = "cashedCustomerList")
-    public Uni<CustomerResponse> apiV1CustomersPut(CustomerRequest customerRequest) {
+    public Uni<CustomerResponse> updateCustomer(CustomerRequest customerRequest) {
         return customerService.update(customerRequest);
     }
 }

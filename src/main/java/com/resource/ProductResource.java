@@ -22,27 +22,27 @@ public class ProductResource implements ProductApi {
 
     @Override
     @CacheResult(cacheName = "cashedProductList")
-    public Uni<List<ProductResponse>> apiV1ProductsGet() {
+    public Uni<List<ProductResponse>> getAllProducts() {
         return productService.list();
     }
 
     @Override
     @CacheInvalidateAll(cacheName = "cashedProduct")
     @CacheInvalidateAll(cacheName = "cashedProductList")
-    public Uni<Response> apiV1ProductsIdDelete(Long id) {
+    public Uni<Response> deleteProductById(Long id) {
         return productService.delete(id);
     }
 
     @Override
     @CacheResult(cacheName = "cashedProduct")
-    public Uni<ProductResponse> apiV1ProductsIdGet(Long id) {
+    public Uni<ProductResponse> getProductById(Long id) {
         return productService.findById(id);
     }
 
     @Override
     @CacheInvalidateAll(cacheName = "cashedProduct")
     @CacheInvalidateAll(cacheName = "cashedProductList")
-    public Uni<ProductResponse> apiV1ProductsPost(ProductRequest productRequest) {
+    public Uni<ProductResponse> createProduct(ProductRequest productRequest) {
         return productService.create(productRequest);
 
     }
@@ -50,7 +50,7 @@ public class ProductResource implements ProductApi {
     @Override
     @CacheInvalidateAll(cacheName = "cashedProduct")
     @CacheInvalidateAll(cacheName = "cashedProductList")
-    public Uni<ProductResponse> apiV1ProductsPut(ProductRequest productRequest) {
+    public Uni<ProductResponse> updateProduct(ProductRequest productRequest) {
         return productService.update(productRequest);
     }
 }
