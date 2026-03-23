@@ -49,8 +49,10 @@ public class ProductService {
         return productService.delete(Int64Value.of(id)).onItem()
                 .transform(boolValue ->
                         boolValue.getValue() ?
-                                Response.ok().build() :
-                                Response.noContent().build());
+                                Response.noContent().build() :
+                                Response.status(Response.Status.NOT_FOUND)
+                                        .entity("Product not found in database")
+                                        .build());
     }
 
     @CacheResult(cacheName = "cashedProduct")
