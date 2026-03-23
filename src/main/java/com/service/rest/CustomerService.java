@@ -4,6 +4,10 @@ import com.google.protobuf.Empty;
 import com.google.protobuf.Int64Value;
 import com.mapper.CustomerMapper;
 import com.proto.service.CustomerList;
+import com.service.cache.CustomerIdKeyGenerator;
+import io.quarkus.cache.CacheInvalidate;
+import io.quarkus.cache.CacheInvalidateAll;
+import io.quarkus.cache.CacheResult;
 import io.quarkus.grpc.GrpcClient;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -23,12 +27,15 @@ public class CustomerService {
     @Inject
     CustomerMapper mapper;
 
+    @CacheResult(cacheName = "cashedCustomerList")
     public Uni<List<CustomerResponse>> list() {
         return customerService.list(Empty.newBuilder().build())
                 .onItem().transform(CustomerList::getResultListList)
                 .map(mapper::customerListToCustomerResponseList);
     }
 
+    @CacheInvalidate(cacheName = "cashedCustomer")
+    @CacheInvalidateAll(cacheName = "cashedCustomerList")
     public Uni<Response> delete(Long id) {
         return customerService.delete(Int64Value.of(id)).onItem()
                 .transform(boolValue ->
@@ -37,15 +44,19 @@ public class CustomerService {
                                 Response.noContent().build());
     }
 
+    @CacheResult(cacheName = "cashedCustomer")
     public Uni<CustomerResponse> findById(Long id) {
         return customerService.findById(Int64Value.of(id)).map(mapper::customerToCustomerResponse);
     }
 
+    @CacheInvalidate(cacheName = "cashedCustomer", keyGenerator = CustomerIdKeyGenerator.class)
+    @CacheInvalidateAll(cacheName = "cashedCustomerList")
     public Uni<CustomerResponse> update(CustomerUpdateRequest customerRequest) {
         return customerService.update(mapper.customerUpdateRequestToCustomer(customerRequest))
                 .map(mapper::customerToCustomerResponse);
     }
 
+    @CacheInvalidateAll(cacheName = "cashedCustomerList")
     public Uni<CustomerResponse> create(CustomerCreateRequest customerRequest) {
         return customerService.create(mapper.customerCreateRequestToCustomer(customerRequest))
                 .map(mapper::customerToCustomerResponse);
