@@ -1,4 +1,4 @@
-package com.service;
+package com.service.websocket;
 
 import com.dto.CustomerDTO;
 import com.dto.CustomerRequestMessage;

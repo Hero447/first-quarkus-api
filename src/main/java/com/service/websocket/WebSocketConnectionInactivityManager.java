@@ -1,4 +1,4 @@
-package com.service;
+package com.service.websocket;
 
 import io.quarkus.scheduler.Scheduled;
 import io.quarkus.websockets.next.OpenConnections;

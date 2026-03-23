@@ -1,8 +1,8 @@
-package com.resource;
+package com.resource.websocket;
 
 import com.dto.CustomerDTO;
 import com.dto.CustomerRequestMessage;
-import com.service.CustomerWebSocketService;
+import com.service.websocket.CustomerWebSocketService;
 import io.quarkus.websockets.next.*;
 import io.smallrye.mutiny.Uni;
 import jakarta.inject.Inject;

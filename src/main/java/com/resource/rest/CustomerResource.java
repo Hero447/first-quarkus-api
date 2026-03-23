@@ -1,11 +1,10 @@
-package com.resource;
+package com.resource.rest;
 
-import com.service.CustomerService;
+import com.service.rest.CustomerService;
 import io.quarkus.cache.CacheInvalidateAll;
 import io.quarkus.cache.CacheResult;
 import io.smallrye.mutiny.Uni;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import org.openapi.quarkus.openapi_yaml.api.CustomerApi;
 import org.openapi.quarkus.openapi_yaml.model.CustomerRequest;

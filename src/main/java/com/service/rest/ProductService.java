@@ -1,4 +1,4 @@
-package com.service;
+package com.service.rest;
 
 import com.google.protobuf.Int64Value;
 import com.mapper.ProductMapper;
