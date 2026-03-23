@@ -10,7 +10,17 @@ tags:
     description: Product Operations
 components:
   schemas:
-    CustomerRequest:
+    CustomerCreateRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        email:
+          type: string
+    CustomerUpdateRequest:
       type: object
       properties:
         id:
@@ -30,7 +40,18 @@ components:
           type: string
         email:
           type: string
-    ProductRequest:
+    ProductCreateRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        price:
+          type: integer
+          format: int64
+    ProductUpdateRequest:
       type: object
       properties:
         id:
@@ -62,7 +83,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CustomerRequest"
+              $ref: "#/components/schemas/CustomerCreateRequest"
         required: true
       responses:
         "201":
@@ -82,7 +103,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CustomerRequest"
+              $ref: "#/components/schemas/CustomerUpdateRequest"
         required: true
       responses:
         "204":
@@ -160,7 +181,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ProductRequest"
+              $ref: "#/components/schemas/ProductUpdateRequest"
         required: true
       responses:
         "204":
@@ -209,7 +230,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ProductRequest"
+              $ref: "#/components/schemas/ProductCreateRequest"
         required: true
       responses:
         "201":

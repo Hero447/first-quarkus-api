@@ -7,7 +7,8 @@ import io.smallrye.mutiny.Uni;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 import org.openapi.quarkus.openapi_yaml.api.CustomerApi;
-import org.openapi.quarkus.openapi_yaml.model.CustomerRequest;
+import org.openapi.quarkus.openapi_yaml.model.CustomerCreateRequest;
+import org.openapi.quarkus.openapi_yaml.model.CustomerUpdateRequest;
 import org.openapi.quarkus.openapi_yaml.model.CustomerResponse;
 
 
@@ -39,14 +40,14 @@ public class CustomerResource implements CustomerApi {
     @Override
     @CacheInvalidateAll(cacheName = "cashedCustomer")
     @CacheInvalidateAll(cacheName = "cashedCustomerList")
-    public Uni<CustomerResponse> createCustomer(CustomerRequest customerRequest) {
+    public Uni<CustomerResponse> createCustomer(CustomerCreateRequest customerRequest) {
         return customerService.create(customerRequest);
     }
 
     @Override
     @CacheInvalidateAll(cacheName = "cashedCustomer")
     @CacheInvalidateAll(cacheName = "cashedCustomerList")
-    public Uni<CustomerResponse> updateCustomer(CustomerRequest customerRequest) {
+    public Uni<CustomerResponse> updateCustomer(CustomerUpdateRequest customerRequest) {
         return customerService.update(customerRequest);
     }
 }

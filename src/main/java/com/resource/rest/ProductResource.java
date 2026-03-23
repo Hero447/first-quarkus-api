@@ -8,7 +8,8 @@ import io.smallrye.mutiny.Uni;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 import org.openapi.quarkus.openapi_yaml.api.ProductApi;
-import org.openapi.quarkus.openapi_yaml.model.ProductRequest;
+import org.openapi.quarkus.openapi_yaml.model.ProductCreateRequest;
+import org.openapi.quarkus.openapi_yaml.model.ProductUpdateRequest;
 import org.openapi.quarkus.openapi_yaml.model.ProductResponse;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public class ProductResource implements ProductApi {
     @Override
     @CacheInvalidateAll(cacheName = "cashedProduct")
     @CacheInvalidateAll(cacheName = "cashedProductList")
-    public Uni<ProductResponse> createProduct(ProductRequest productRequest) {
+    public Uni<ProductResponse> createProduct(ProductCreateRequest productRequest) {
         return productService.create(productRequest);
 
     }
@@ -48,7 +49,7 @@ public class ProductResource implements ProductApi {
     @Override
     @CacheInvalidateAll(cacheName = "cashedProduct")
     @CacheInvalidateAll(cacheName = "cashedProductList")
-    public Uni<ProductResponse> updateProduct(ProductRequest productRequest) {
+    public Uni<ProductResponse> updateProduct(ProductUpdateRequest productRequest) {
         return productService.update(productRequest);
     }
 }

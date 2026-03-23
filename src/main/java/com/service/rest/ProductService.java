@@ -9,7 +9,8 @@ import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
-import org.openapi.quarkus.openapi_yaml.model.ProductRequest;
+import org.openapi.quarkus.openapi_yaml.model.ProductCreateRequest;
+import org.openapi.quarkus.openapi_yaml.model.ProductUpdateRequest;
 import org.openapi.quarkus.openapi_yaml.model.ProductResponse;
 
 import java.util.List;
@@ -49,13 +50,13 @@ public class ProductService {
         return productService.findById(Int64Value.of(id)).map(mapper::productToProductResponse);
     }
 
-    public Uni<ProductResponse> update(ProductRequest productRequest) {
-        return productService.update(mapper.productRequestToProduct(productRequest))
+    public Uni<ProductResponse> update(ProductUpdateRequest productRequest) {
+        return productService.update(mapper.productUpdateRequestToProduct(productRequest))
                 .map(mapper::productToProductResponse);
     }
 
-    public Uni<ProductResponse> create(ProductRequest productRequest) {
-        return productService.create(mapper.productRequestToProduct(productRequest))
+    public Uni<ProductResponse> create(ProductCreateRequest productRequest) {
+        return productService.create(mapper.productCreateRequestToProduct(productRequest))
                 .map(mapper::productToProductResponse);
     }
 }

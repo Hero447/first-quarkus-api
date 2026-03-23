@@ -9,7 +9,8 @@ import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
-import org.openapi.quarkus.openapi_yaml.model.CustomerRequest;
+import org.openapi.quarkus.openapi_yaml.model.CustomerCreateRequest;
+import org.openapi.quarkus.openapi_yaml.model.CustomerUpdateRequest;
 import org.openapi.quarkus.openapi_yaml.model.CustomerResponse;
 
 import java.util.List;
@@ -40,13 +41,13 @@ public class CustomerService {
         return customerService.findById(Int64Value.of(id)).map(mapper::customerToCustomerResponse);
     }
 
-    public Uni<CustomerResponse> update(CustomerRequest customerRequest) {
-        return customerService.update(mapper.customerRequestToCustomer(customerRequest))
+    public Uni<CustomerResponse> update(CustomerUpdateRequest customerRequest) {
+        return customerService.update(mapper.customerUpdateRequestToCustomer(customerRequest))
                 .map(mapper::customerToCustomerResponse);
     }
 
-    public Uni<CustomerResponse> create(CustomerRequest customerRequest) {
-        return customerService.create(mapper.customerRequestToCustomer(customerRequest))
+    public Uni<CustomerResponse> create(CustomerCreateRequest customerRequest) {
+        return customerService.create(mapper.customerCreateRequestToCustomer(customerRequest))
                 .map(mapper::customerToCustomerResponse);
     }
 }
