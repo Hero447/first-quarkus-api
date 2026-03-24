@@ -1,67 +1,69 @@
-# first-quarkus-api
+# 🚀 First Quarkus API
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+This is a demonstration project based on **Quarkus** (a Java framework optimized for Kubernetes and GraalVM), implementing a RESTful API for managing products and customers.
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+The project is built on a microservices architecture: it acts as a client that retrieves necessary data from another service using the high-performance **gRPC** protocol.
 
-## Running the application in dev mode
+## 🛠 Tech Stack
+*   **Java 21**
+*   **Quarkus** (RESTEasy Reactive)
+*   **gRPC** (for inter-service communication)
+*   **Maven** (build tool)
+*   **SmallRye OpenAPI** (automated Swagger documentation)
 
-You can run your application in dev mode that enables live coding using:
+## 🔄 Inter-service Communication
+This service uses a **gRPC client** to communicate with backend services. This provides:
+*   Low latency for data transfer.
+*   Strong typing thanks to Protocol Buffers.
+*   High performance for inter-service requests.
 
-```shell script
-./mvnw quarkus:dev
+## 🛰 API Endpoints (REST)
+
+All resources are grouped under API version `v1`.
+
+### 📦 Products
+
+
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| **GET** | `/api/v1/products` | Get a list of all products |
+| **GET** | `/api/v1/products/{id}` | Get a product by its **ID** |
+| **POST** | `/api/v1/products` | Create a new product |
+| **PUT** | `/api/v1/products` | Update an existing product |
+| **DELETE** | `/api/v1/products/{id}` | Delete a product by its **ID** |
+
+### 👥 Customers
+
+
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| **GET** | `/api/v1/customers` | Get a list of all customers |
+| **GET** | `/api/v1/customers/{id}` | Get customer data by **ID** |
+| **POST** | `/api/v1/customers` | Register a new customer |
+| **PUT** | `/api/v1/customers` | Update customer data |
+| **DELETE** | `/api/v1/customers/{id}` | Delete a customer by **ID** |
+
+## 🚀 Getting Started
+
+### Development Mode
+Run the application with **Live Coding** support (changes are applied instantly):
+```shell
+./mvnw compile quarkus:dev
 ```
+### 🚀 Build and Run (JVM Mode)
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+To create a standard JAR file and run it, use the following commands:
 
-## Packaging and running the application
-
-The application can be packaged using:
-
-```shell script
+```shell
 ./mvnw package
+java -jar target/quarkus-app/quarkus-run.jar
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+## 📖 Documentation
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+Once the project is running, you can use the interactive console to test requests:
 
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
-```
-
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using:
-
-```shell script
-./mvnw package -Dnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
-
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/first-quarkus-api-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Related Guides
-
-- REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it
-- SmallRye OpenAPI ([guide](https://quarkus.io/guides/openapi-swaggerui)): Document your REST APIs with OpenAPI - comes with Swagger UI
-
-## Provided Code
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+*   **Swagger UI**: [http://localhost:8080/q/swagger-ui](http://localhost:8080/q/swagger-ui) — a visual interface for API testing.
+*   **OpenAPI Spec**: [http://localhost:8080/q/openapi](http://localhost:8080/q/openapi) — raw API specification in YAML format.
