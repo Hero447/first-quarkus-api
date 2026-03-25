@@ -20,6 +20,11 @@ components:
           type: string
         email:
           type: string
+        active:
+          type: boolean
+        lastActivity:
+          type: string
+          format: date-time
     CustomerUpdateRequest:
       type: object
       properties:
@@ -30,6 +35,11 @@ components:
           type: string
         email:
           type: string
+        active:
+          type: boolean
+        lastActivity:
+          type: string
+          format: date-time
     CustomerResponse:
       type: object
       properties:
@@ -40,6 +50,11 @@ components:
           type: string
         email:
           type: string
+        active:
+          type: boolean
+        lastActivity:
+          type: string
+          format: date-time
     ProductCreateRequest:
       type: object
       properties:

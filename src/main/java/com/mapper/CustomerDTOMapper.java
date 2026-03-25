@@ -7,7 +7,7 @@ import org.mapstruct.MappingConstants;
 
 import java.util.List;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.JAKARTA)
+@Mapper(componentModel = MappingConstants.ComponentModel.JAKARTA, uses = {ProtoTimeMapper.class})
 public interface CustomerDTOMapper {
     CustomerDTO customerToCustomerDTO(Customer customer);
 

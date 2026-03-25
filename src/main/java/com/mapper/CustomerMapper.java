@@ -10,7 +10,7 @@ import org.openapi.quarkus.openapi_yaml.model.CustomerResponse;
 
 import java.util.List;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.JAKARTA)
+@Mapper(componentModel = MappingConstants.ComponentModel.JAKARTA, uses = {ProtoTimeMapper.class})
 public interface CustomerMapper {
     Customer customerCreateRequestToCustomer(CustomerCreateRequest customerRequest);
 
